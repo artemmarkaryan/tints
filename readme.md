@@ -1,6 +1,7 @@
 # Tints
 <details>
-<summary>**Database models**</summary>
+<summary>Database models</summary>
+
 ```
 Category
 - id: int
@@ -164,6 +165,7 @@ Banner
 
 <details>
 <summary>DTO</summary>
+
 ```
 CategoryPreview
 {
