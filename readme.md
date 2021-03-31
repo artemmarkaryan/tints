@@ -1,11 +1,15 @@
 # Tints
 ## Database models
-- [ ] Category
+- [x] Category
 	- id: int
 	- name: string
 	- translitName: string
 
-- [ ] Product
+- [x] Shade
+	- id: int
+	- image: string
+
+- [x] Product
 	- id: int
 	- name: string
 	- translitName: string
@@ -14,25 +18,23 @@
 	- new: bool
 	- top: bool
 
-- [ ] Shade
-	- id: int
-	- image: string
-
-- [ ] ProductInfo
+- [x] ProductInfo
 	- id: int
 	- product: int
 	- title: string
 	- text: string
 
-- [ ] SKU
+- [x] SKU
 	- id: int
 	- name: string
+	- product: int
+	- translitName: string
 	- vendorCode: string
 	- oldPrice: float
 	- price: float
 	- weight: int
 
-- [ ] SKUImage
+- [x] SKUImage
 	- id: int
 	- SKU: int
 	- image: string
