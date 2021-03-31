@@ -89,7 +89,7 @@ Banner
 </details>
 
 <details>
-<summary>**Routes**</summary>
+<summary>Routes</summary>
 
 ### Product
 
