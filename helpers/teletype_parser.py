@@ -8,7 +8,7 @@
 #
 # def get_article_from_teletype(teletype_link):
 #     try:
-#         response = requests.get(teletype_link)
+#         response = requests.get_many(teletype_link)
 #         response_decoded = change_encoding(response.text)
 #         soup = BeautifulSoup(response_decoded, features='html.parser')
 #         article_text = str(soup.find('article'))

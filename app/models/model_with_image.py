@@ -10,6 +10,9 @@ class ModelWithImage(Model):
     image = FileField('Файл изображения', null=True, blank=True)
     image_url = URLField('Ссылка на изображение', null=True, blank=True)
 
+    class Meta:
+        abstract = True
+
     def save(self, *a, **kw):
         url = self.image_url
         if url:

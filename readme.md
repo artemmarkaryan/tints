@@ -89,12 +89,12 @@ Banner
 </details>
 
 <details>
-<summary>**Routes**</summary>
+<summary>Routes</summary>
 
 ### Product
 
 `GET /product/all`
-
+[ссылка](http://80.78.246.133:8000/product/all)
 ```
 {
 	data: {
@@ -105,7 +105,6 @@ Banner
 
 
 `GET /product/bestsellers`
-
 ```
 {
 	data: {
@@ -114,8 +113,8 @@ Banner
 }
 ```
 
-
 `GET /product/category/<int:categoryId>`
+[ссылка](http://80.78.246.133:8000/product/category/1)
 
 ```
 {
@@ -128,7 +127,7 @@ Banner
 
 
 `GET /shade/all`
-
+[ссылка](http://80.78.246.133:8000/shade/all)
 ```
 {
 	data: {
@@ -140,7 +139,7 @@ Banner
 
 
 `GET /category/all/preview`
-
+[ссылка](http://80.78.246.133:8000/category/all/preview)
 ``` 
 {
 	data: {
@@ -151,11 +150,22 @@ Banner
 
 
 `GET /product/<int:id>`
-
+[ссылка](http://80.78.246.133:8000/product/1)
 ```
 {
 	data: {
 		product: Product
+	}
+}
+```
+
+### Banner
+`GET /banner/all`
+[ссылка](http://80.78.246.133:8000/banner/all)
+```
+{
+	data: {
+		banners: Banner
 	}
 }
 ```
@@ -165,6 +175,17 @@ Banner
 
 <details>
 <summary>DTO</summary>
+
+```
+Banner
+{
+    title: string
+    text: string
+    image: string
+    buttonText: string
+    buttonUrl: string
+}
+```
 
 ```
 CategoryPreview
@@ -193,6 +214,7 @@ Sku
 	categoryId: int
 	name: string
 	translit: string
+    vendorCode: string
 	oldPrice: number
 	price: number
 	image: string

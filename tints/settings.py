@@ -11,7 +11,10 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '80.78.246.133',
+    '0.0.0.0'
+]
 
 
 # Application definition
@@ -63,8 +66,11 @@ WSGI_APPLICATION = 'tints.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'main',
+        'USER': 'admin',
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': '80.78.246.133'
     }
 }
 
@@ -101,11 +107,16 @@ USE_L10N = True
 
 USE_TZ = True
 
+ON_SERVER = os.environ['PATH'].startswith('/usr')
 
-STATIC_ROOT = '/var/static/tints'
+STATIC_ROOT = '/var/static/tints' if ON_SERVER else './static'
 IMAGES_PATH = './static/img/'
 STATIC_URL = '/static/'
+# noinspection PyUnresolvedReferences
 STATICFILES_DIRS = [
     # os.path.join(BASE_DIR, "static"),
-    './static/',
+    ('img', './static/img')
+    # './static/',
 ]
+
+

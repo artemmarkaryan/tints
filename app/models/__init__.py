@@ -1,5 +1,6 @@
 from .article import *
 from .category import *
+from .banner import *
 from .model_with_image import *
 from .product import *
 from .product_info import *

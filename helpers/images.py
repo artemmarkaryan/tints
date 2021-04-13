@@ -1,6 +1,7 @@
 import requests
 import shutil
 import re
+import os
 from helpers import random_hash
 from django.conf import settings
 
@@ -14,7 +15,7 @@ def download_image_from_source(image_url):
     with open(filename, 'wb+') as f:
         shutil.copyfileobj(r.raw, f)
 
-    return filename
+    return filename[1:]  # remove . from start
 
 
 def create_image_path(instance, filename_raw):
