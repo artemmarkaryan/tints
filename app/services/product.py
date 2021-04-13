@@ -81,3 +81,9 @@ def get_one(product_id):
     product['info'] = list(ProductInfo.objects.filter(product_id=product['id']).values('title', 'text'))
     product['related'] = __get_sku_dto(Product.objects.get(id=product_id).related.all())
     return product
+
+
+def get_bestsellers():
+    return __get_sku_dto(
+        Sku.objects.filter(product__bestseller=True)
+    )

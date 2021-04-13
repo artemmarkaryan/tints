@@ -105,6 +105,9 @@ Banner
 
 
 `GET /product/bestsellers`
+`GET /product/all`
+[ссылка](http://80.78.246.133:8000/product/bestsellerss)
+
 ```
 {
 	data: {

@@ -18,3 +18,8 @@ def get_by_id(_, product_id):
     return helpers.wrap_data({
         'product': services.product.get_one(product_id)
     })
+
+def get_bestsellers(_):
+    return helpers.wrap_data({
+        'products': services.product.get_bestsellers()
+    })
