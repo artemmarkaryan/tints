@@ -99,7 +99,7 @@ Banner
 ```
 {
 	data: {
-		products: [Sku]
+		products: [SkuPreview]
 	}
 }
 ```
@@ -181,70 +181,87 @@ Banner
 ```
 CategoryPreview
 {
-	id: int
-	name: string
-	translit: string
+    id: int
+    name: string
+    translit: string
 }
 ```
 
 ```
 Category
 {
-	id: int
-	name: string
-	translit: string
-	sku: [Sku]
+    id: int
+    name: string
+    translit: string
+    sku: [SkuPreview]
 }
+```
+
+```
+SkuPreview
+{
+    id: int
+    productId: int
+    categoryId: int
+    name: string
+    translit: string
+    vendorCode: string
+    oldPrice: number
+    price: number
+    image: string
+    new: bool 
+    top: bool
+    shadeId: int
+}
+
 ```
 
 ```
 Sku
 {
-	id: int
-	productId: int
-	categoryId: int
-	name: string
-	translit: string
+    id: int
+    productId: int
+    categoryId: int
+    name: string
+    translit: string
     vendorCode: string
-	oldPrice: number
-	price: number
-	image: string
-	new: bool 
-	top: bool
-	shadeId: int
+    oldPrice: number
+    price: number
+    images: [string]
+    new: bool 
+    top: bool
+    shadeId: int
 }
 ```
 
 ```
 Product
 {
-	id: int
-	categoryId: int
-	name: string
-	translit: string
-	description: string
-    images: [string]
-	info: [Info]
-	sku: [Sku]
-	related: [Sku]
+    id: int
+    categoryId: int
+    name: string
+    translit: string
+    description: string
+    info: [Info]
+    sku: [Sku]
+    related: [SkuPreview]
 }
 ```
 
 ```
 Info
 {
-	title: string
-	text: string
+    title: string
+    text: string
 }
 ```
 
 ```
 Shade
 {
-	id: int
-	image: string
+    id: int
+    image: string
 }
 ```
-
 
 </details>
