@@ -65,19 +65,6 @@ Review
 ```
 
 ```
-Article
-- id: int
-- title: string
-- image: string
-- description: string
-- text: string
-
-AboutArticle(Article)
-
-AdviceArticle(Article)
-```
-
-```
 Banner
 - id: int
 - title: string
@@ -235,6 +222,7 @@ Product
 	name: string
 	translit: string
 	description: string
+    images: [string]
 	info: [Info]
 	sku: [Sku]
 	related: [Sku]

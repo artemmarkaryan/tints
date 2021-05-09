@@ -1,7 +1,8 @@
 from django.db.models import *
+from .model_with_image import ModelWithImage
 
 
-class Product(Model):
+class Product(ModelWithImage):
     class Meta:
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
