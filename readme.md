@@ -19,6 +19,7 @@ Shade
 Product
 - id: int
 - name: string
+- category: int
 - translitName: string
 - description: string
 - shade: int
