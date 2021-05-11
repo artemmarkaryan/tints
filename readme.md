@@ -1,4 +1,6 @@
 # Tints
+## Contact 
+
 <details>
 <summary>Database models</summary>
 
