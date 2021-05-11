@@ -122,7 +122,7 @@ Banner
 ```
 {
 	data: {
-		sahdes: [Shade]
+		shades: [Shade]
 	}
 }
 
@@ -261,6 +261,7 @@ Shade
 {
     id: int
     image: string
+    name: string
 }
 ```
 

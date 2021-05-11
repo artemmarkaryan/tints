@@ -6,3 +6,5 @@ db.sqlite3
 requirements.txt
 app/migrations/
 static/
+/API.http
+/http-client.env.json

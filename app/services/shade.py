@@ -6,5 +6,5 @@ from ..models import (
 
 def get_all():
     return list(
-        Shade.objects.all().annotate().values('id', 'image')
+        Shade.objects.all().annotate().values('id', 'image', 'name')
     )
