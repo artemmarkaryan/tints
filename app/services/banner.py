@@ -6,6 +6,10 @@ from ..models import (
 
 def get_all():
     return list(
-        Banner.objects.values('title', 'text', 'buttonText', 'buttonUrl', 'image')
+        Banner.objects.annotate(
+            backgorundLg=F('background_lg'),
+            backgorundSm=F('background_sm')
+        ).values(
+            'title', 'text', 'buttonText', 'buttonUrl',
+            'backgorundLg', 'backgorundSm')
     )
-

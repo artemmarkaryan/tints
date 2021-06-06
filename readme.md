@@ -72,7 +72,8 @@ Banner
 - id: int
 - title: string
 - text: string
-- image: string
+- backgroundLg: string
+- backgroundSm: string
 - buttonText: string
 - buttonUrl: string
 ```
