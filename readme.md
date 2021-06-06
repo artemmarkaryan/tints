@@ -163,6 +163,27 @@ Banner
 }
 ```
 
+### Feedback
+`POST /feedback`
+[ссылка](http://80.78.246.133:8000/feedback)
+```
+request: {
+    contact: string 
+    text: string 
+}
+```
+
+### Newsletter
+`POST /newsletter`
+[ссылка](http://80.78.246.133:8000/newsletter)
+```
+request: {
+    email: string
+}
+```
+
+
+
 
 </details>
 
