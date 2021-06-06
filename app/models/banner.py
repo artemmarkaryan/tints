@@ -14,17 +14,21 @@ import helpers
 from django.core.management import call_command
 
 
-class Banner(ModelWithImage):
+class Banner(Model):
     title = CharField(max_length=1023, verbose_name='Заголовок')
     text = TextField('Текст')
     buttonText = CharField(max_length=128, verbose_name='Текст кнопки')
     buttonUrl = URLField(verbose_name='Ссылка кнопки')
     background_lg = FileField(
-        'Файл фона баннера (Десктоп)', null=True, blank=True)
+        'Файл фона баннера (Десктоп)',
+        upload_to=helpers.random_hash.hash_filename,
+        null=True, blank=True)
     background_lg_url = URLField(
         'Ссылка на фон баннера (Десктоп)', null=True, blank=True)
     background_sm = FileField(
-        'Файл фона баннера (Телефон)', null=True, blank=True)
+        'Файл фона баннера (Телефон)',
+        upload_to=helpers.random_hash.hash_filename,
+        null=True, blank=True)
     background_sm_url = URLField(
         'Ссылка на фон баннера (Телефон)', null=True, blank=True)
 
@@ -38,7 +42,7 @@ class Banner(ModelWithImage):
     def save(self, *a, **kw):
         url = self.background_lg_url
         if url:
-            self.background = helpers.images.download_image_from_source(url)
+            self.background_lg = helpers.images.download_image_from_source(url)
             self.background_lg_url = None
 
         url = self.background_sm_url

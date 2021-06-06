@@ -7,7 +7,9 @@ class ModelWithImage(Model):
     """
     use "image" and "image_url" fields
     """
-    image = FileField('Файл изображения', null=True, blank=True)
+    image = FileField('Файл изображения',
+                      upload_to=helpers.random_hash.hash_filename,
+                      null=True, blank=True)
     image_url = URLField('Ссылка на изображение', null=True, blank=True)
 
     class Meta:
