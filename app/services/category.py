@@ -6,6 +6,8 @@ from ..models import (
 
 def get_all():
     categories = list(
-        Category.objects.annotate(translit=F('translit_name')).values('id', 'name', 'translit')
+        Category.objects.annotate(
+            translit=F('translit_name')
+        ).values('id', 'name', 'translit')
     )
     return categories

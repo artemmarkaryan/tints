@@ -5,7 +5,8 @@ from app.views import (
     shade,
     banner,
     feedback,
-    newsletter
+    newsletter,
+    review
 )
 
 urlpatterns = [
@@ -16,6 +17,7 @@ urlpatterns = [
     path('category/all/preview', category.get_all),
     path('shade/all/', shade.get_all),
     path('banner/all/', banner.get_all),
+    path('review/all/', review.get_all),
     path('feedback/', feedback.process),
     path('newsletter/', newsletter.process),
 ]

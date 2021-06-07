@@ -164,6 +164,17 @@ Banner
 }
 ```
 
+### Review (Отзывы покупателей)
+`GET /review/all`
+[ссылка](http://80.78.246.133:8000/review/all)
+```
+{
+	data: {
+		reviews: [Review]
+	}
+}
+```
+
 ### Feedback
 `POST /feedback`
 [ссылка](http://80.78.246.133:8000/feedback)
@@ -286,6 +297,18 @@ Shade
     id: int
     image: string
     name: string
+}
+```
+
+```
+Review
+{
+    title: string
+    author: string
+    url: string
+    date: string
+    pros: string
+    cons: string
 }
 ```
 
