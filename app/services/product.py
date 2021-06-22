@@ -1,5 +1,5 @@
-from django.db.models import F
-from typing import List, Dict
+from django.db.models import F, QuerySet
+
 from ..models import (
     Category,
     Product,
@@ -33,10 +33,11 @@ def __get_sku_preview_dto(queryset) -> list:
         )
     )
     for j in range(len(sku)):
-        sku[j]['image'] = SkuImage.objects \
+        image_query = SkuImage.objects \
             .filter(sku_id=sku[j]['id']) \
-            .first() \
-            .image
+            .first()
+        if image_query is not None:
+            sku[j]['image'] = image_query.image
     return sku
 
 
@@ -95,29 +96,32 @@ def get_many(category_id=None):
     return categories
 
 
-def get_one(product_id):
-    product_list: List[Dict] = list(
-        Product.objects.filter(id=product_id)
-            .annotate(categoryId=F('category_id'), translit=F('translit_name'))
-            .values(
-            'id',
-            'category_id',
-            'name',
-            'translit',
-            'description',
-        )
-    )
-    if len(product_list) == 0:
-        raise Product.DoesNotExist
-    else:
-        product = product_list[0]
+def get_one(sku_id):
+    sku_query = Sku.objects.filter(id=sku_id)
+    if len(sku_query) == 0:
+        raise Sku.DoesNotExist
 
-    product['sku'] = __get_sku_dto(Sku.objects.filter(product_id=product['id']))
+    product_query = Product.objects.filter(id=sku_query[0].product.id) \
+    .annotate(
+        translit=F('translit_name'),
+        categoryId=F('category_id')) \
+    .values(
+        'id',
+        'categoryId',
+        'name',
+        'translit',
+        'description',
+    )
+    if len(product_query) == 0:
+        raise Product.DoesNotExist
+    product = product_query.first()
+    product['sku'] = __get_sku_dto(sku_query)
     product['info'] = list(
         ProductInfo.objects.filter(product_id=product['id']).values('title',
                                                                     'text'))
-    product['related'] = __get_sku_dto(
-        Product.objects.get(id=product_id).related.all())
+    product['related'] = __get_sku_preview_dto(
+        Product.objects.get(id=product['id']).related.all()
+    )
     return product
 
 

@@ -15,7 +15,7 @@ def download_image_from_source(image_url):
     with open(filename, 'wb+') as f:
         shutil.copyfileobj(r.raw, f)
 
-    return filename[1:]  # remove . from start
+    return filename[2:]  # remove . from start
 
 
 def create_image_path(instance, filename_raw):

@@ -17,4 +17,15 @@ class ProductInfoInline(admin.TabularInline):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     filter_horizontal = ['related']
+    fields = [
+        "name",
+        "category",
+        "translit_name",
+        "description",
+        "new",
+        "top",
+        "bestseller",
+        "related"
+    ]
+    readonly_fields = ['translit_name']
     inlines = [ProductInfoInline, SkuAdminInline]

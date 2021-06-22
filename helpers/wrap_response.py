@@ -1,6 +1,6 @@
 import json
 from typing import Any
-from django.http import HttpResponse
+from django.http import JsonResponse
 
 
 class JSONEncoder(json.JSONEncoder):
@@ -11,22 +11,18 @@ class JSONEncoder(json.JSONEncoder):
             return str(o)
 
 
-def wrap_data(data: dict) -> HttpResponse:
-    return HttpResponse(
-        json.dumps(
-            {'data': data},
-            ensure_ascii=False,
-            cls=JSONEncoder
-        )
+def wrap_data(data: dict):
+    return JsonResponse(
+        {'data': data},
+        encoder=JSONEncoder,
+        safe=False
     )
 
 
-def wrap_error(message: str, status: int = 400) -> HttpResponse:
-    return HttpResponse(
-        json.dumps(
-            {'error': message},
-            ensure_ascii=False,
-            cls=JSONEncoder
-        ),
+def wrap_error(message: str, status: int = 400):
+    return JsonResponse(
+        {'error': message},
+        encoder=JSONEncoder,
+        safe=False,
         status=status
     )

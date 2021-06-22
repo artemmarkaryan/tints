@@ -8,4 +8,9 @@ class SkuImageAdminInline(admin.TabularInline):
 
 @admin.register(Sku)
 class SkuAdmin(admin.ModelAdmin):
+    list_display = [
+        "__str__",
+        "vendor_code",
+        "weight"
+    ]
     inlines = [SkuImageAdminInline]

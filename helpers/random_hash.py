@@ -8,5 +8,5 @@ def hash_string():
 
 
 def hash_filename(instance, filename):
-    return settings.IMAGES_URL + hash_string() + '.' + \
-           re.findall('\.(\w*)$', filename)[0]
+    extension = filename[filename.rfind('.'):]
+    return settings.IMAGES_PATH + hash_string() + extension
