@@ -9,8 +9,6 @@ def new(request):
         'name',
         'email',
         'phone',
-        'address',
-        'comment',
         'paymentMethodCode',
         'shippingMethodId',
         'items'

@@ -289,10 +289,7 @@ NewOrder - отправляете на сервер при создании за
 name:               string
 email:              string
 phone:              string
-address:            string
 comment:            string
-shippingDate:       string
-shippingTime:       string
 paymentMethodCode:  string
 shippingMethodId:   int
 items:              [NewItem]
