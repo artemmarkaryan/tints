@@ -1,86 +1,7 @@
 # Tints
-## Contact 
-
+## Routes 
 <details>
-<summary>Database models</summary>
-
-```
-Category
-- id: int
-- name: string
-- translitName: string
-```
-
-```
-Shade
-- id: int
-- image: string
-```
-
-```
-Product
-- id: int
-- name: string
-- category: int
-- translitName: string
-- description: string
-- shade: int
-- new: bool
-- top: bool
-```
-
-```
-ProductInfo
-- id: int
-- product: int
-- title: string
-- text: string
-```
-
-```
-SKU
-- id: int
-- name: string
-- product: int
-- translitName: string
-- vendorCode: string
-- oldPrice: float
-- price: float
-- weight: int
-```
-
-```
-SKUImage
-- id: int
-- SKU: int
-- image: string
-```
-
-```
-Review
-- id: int
-- date: string
-- title: string
-- url: string
-- author: string
-- pros: string
-- cons: string
-```
-
-```
-Banner
-- id: int
-- title: string
-- text: string
-- backgroundLg: string
-- backgroundSm: string
-- buttonText: string
-- buttonUrl: string
-```
-</details>
-
-<details>
-<summary>Routes</summary>
+<summary>see</summary>
 
 ### Product
 
@@ -194,13 +115,63 @@ request: {
 }
 ```
 
-
-
-
 </details>
 
+### Order
+`POST /order`
+```
+request: NewOrder
+responce: 
+200: OK
+data: {
+    orderId:    int
+    key:        string 
+}
+400: Неправильные параметры
+```
+
+`GET /order/<order_id>?key=<order_key>`
+```
+responce:
+200: OK
+data: {
+    Order
+}
+404: Нет такого ордера или неправльный ключ
+```
+
+`GET /order/<order_id>/paymentURL?key=<order_key>`
+```
+responce:
+200: OK
+data: {paymentURL: string}
+404: Нет такого ордера или неправльный ключ
+```
+
+### Shipping method
+`GET /shippingMethods`
+```
+responce
+data: {
+    code:           string
+    description:    string
+}
+```
+
+### Payment method
+`GET /paymentMethods`
+```
+responce
+data: {
+    code:           string
+    description:    string
+}
+```
+
+
+## DTO 
 <details>
-<summary>DTO</summary>
+<summary>see</summary>
 
 ```
 Banner
@@ -307,9 +278,55 @@ Review
     author: string
     url: string
     date: string
-    pros: string
-    cons: string
+    description: string
 }
+```
+
+```
+NewOrder - отправляете на сервер при создании заказа 
+name:               string
+email:              string
+phone:              string
+address:            string
+comment:            string
+shippingDate:       string
+shippingTime:       string
+paymentMethodCode:  string
+shippingMethodId:   int
+items:              [NewItem]
+```
+
+```
+Order - получаете с сервера для отображения на странице заказа
+name:               string
+email:              string
+phone:              string
+address:            string
+comment:            string
+shippingDate:       string
+shippingTime:       string
+paymentMethod:      string
+shippingMethod:     string
+shippingPrice:      float
+items:              [Item]
+itemsPrice:         float
+fullPrice:          float
+status:             string
+canPay:             bool
+```
+
+```
+NewItem - отправляете на сервер при создании заказа
+skuId:          int
+quantity:       int
+```
+
+```
+Item - получаете с сервера для отображения на странице заказа
+skuId:          int
+name:           string
+quantity:       int
+price:          float
 ```
 
 </details>

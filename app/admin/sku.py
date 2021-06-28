@@ -10,6 +10,7 @@ class SkuImageAdminInline(admin.TabularInline):
 class SkuAdmin(admin.ModelAdmin):
     list_display = [
         "__str__",
+        "id",
         "vendor_code",
         "weight"
     ]

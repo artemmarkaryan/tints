@@ -44,9 +44,9 @@ class Order(Model):
     # shipping
     shipping_method = ForeignKey('ShippingMethod', verbose_name='Способ доставки',
                                  on_delete=RESTRICT, null=True, blank=True)
-    shipping_date = DateField(verbose_name='Дата доставки', max_length=48,
+    shipping_date = CharField(verbose_name='Дата доставки', max_length=48,
                               null=True, blank=True)
-    shipping_time = TimeField(verbose_name='Время доставки', max_length=32,
+    shipping_time = CharField(verbose_name='Время доставки', max_length=32,
                               null=True, blank=True)
 
     @property  # стоимость всех продуктов
