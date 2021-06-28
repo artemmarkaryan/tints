@@ -8,6 +8,8 @@ from app.views import (
     newsletter,
     review,
     order,
+    shipping_method,
+    payment_method
 )
 
 urlpatterns = [
@@ -22,5 +24,8 @@ urlpatterns = [
     path('feedback/', feedback.process),
     path('newsletter/', newsletter.process),
     path('order/', order.new),
+    path('shippingMethod/all', shipping_method.get_all),
+    path('paymentMethod/all', payment_method.get_all),
     path('order/<int:order_id>', order.get),
+
 ]

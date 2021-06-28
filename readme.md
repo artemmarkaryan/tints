@@ -149,17 +149,19 @@ data: {paymentURL: string}
 ```
 
 ### Shipping method
-`GET /shippingMethods`
+`GET /shippingMethod/all`
 ```
 responce
 data: {
-    code:           string
+    id:             int
     description:    string
+    name:           string
+    price:          float
 }
 ```
 
 ### Payment method
-`GET /paymentMethods`
+`GET /paymentMethod/all`
 ```
 responce
 data: {
