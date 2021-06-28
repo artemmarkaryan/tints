@@ -8,3 +8,8 @@ from .review import *
 from .shade import *
 from .sku import *
 from .sku_image import *
+from .order import *
+from .order_status import *
+from .payment_method import *
+from .shipping_method import *
+from .item import *

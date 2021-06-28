@@ -7,9 +7,9 @@ from ..models import (
 def get_all():
     return list(
         Banner.objects.annotate(
-            backgorundLg=F('background_lg'),
-            backgorundSm=F('background_sm')
+            backgroundLg=F('background_lg'),
+            backgroundSm=F('background_sm')
         ).values(
             'title', 'text', 'buttonText', 'buttonUrl',
-            'backgorundLg', 'backgorundSm')
+            'backgroundLg', 'backgroundSm')
     )
