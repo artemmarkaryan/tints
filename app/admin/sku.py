@@ -11,7 +11,11 @@ class SkuAdmin(admin.ModelAdmin):
     list_display = [
         "__str__",
         "id",
+        "price",
         "vendor_code",
         "weight"
+    ]
+    list_editable = [
+        "price"
     ]
     inlines = [SkuImageAdminInline]
