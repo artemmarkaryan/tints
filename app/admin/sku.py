@@ -1,9 +1,13 @@
 from django.contrib import admin
-from ..models import Sku, SkuImage
+from ..models import Sku, SkuImage, SkuVideo
 
 
 class SkuImageAdminInline(admin.TabularInline):
     model = SkuImage
+
+
+class SkuVideoAdminInline(admin.TabularInline):
+    model = SkuVideo
 
 
 @admin.register(Sku)
@@ -18,4 +22,4 @@ class SkuAdmin(admin.ModelAdmin):
     list_editable = [
         "price"
     ]
-    inlines = [SkuImageAdminInline]
+    inlines = [SkuImageAdminInline, SkuVideoAdminInline]
