@@ -5,7 +5,8 @@ from ..models import (
     Product,
     ProductInfo,
     Sku,
-    SkuImage
+    SkuImage,
+    SkuVideo
 )
 
 
@@ -71,6 +72,13 @@ def __get_sku_dto(queryset) -> list:
                 .values_list('image', flat=True)
         )
 
+    for j in range(len(sku)):
+        sku[j]['videos'] = list(
+            SkuVideo.objects \
+                .filter(sku_id=sku[j]['id']) \
+                .values_list('url', flat=True)
+        )
+
     return sku
 
 
@@ -102,10 +110,10 @@ def get_one(sku_id):
         raise Sku.DoesNotExist
 
     product_query = Product.objects.filter(id=sku_query[0].product.id) \
-    .annotate(
+        .annotate(
         translit=F('translit_name'),
         categoryId=F('category_id')) \
-    .values(
+        .values(
         'id',
         'categoryId',
         'name',
