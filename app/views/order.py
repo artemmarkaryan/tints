@@ -1,10 +1,14 @@
 import json
 from django.db import IntegrityError
+import django.http
 from helpers import wrap_response
-from app.services import order
-from app.models import Order
+from app import (
+    services,
+    models
+)
 
-def new(request):
+
+def create(request):
     keys = (
         'name',
         'email',
@@ -13,7 +17,7 @@ def new(request):
         'shippingMethodId',
         'items'
     )
-    body = json.loads(request.body)
+    body: dict = json.loads(request.body)
     for key in keys:
         if body.get(key) is None:
             return wrap_response.wrap_error(
@@ -21,7 +25,7 @@ def new(request):
             )
 
     try:
-        new_order = order.new(body)
+        new_order = services.order.new(body)
         return wrap_response.wrap_data(
             {
                 "orderId": new_order.id,
@@ -30,16 +34,16 @@ def new(request):
         )
     except Exception as e:
         return wrap_response.wrap_error(
-            f"Не получиось создать заказ: {e}"
+            f"Не получиось создать заказ: {e}, {e.__traceback__}"
         )
 
 
 def get(request, order_id):
     try:
         key = request.GET.get('key')
-        return wrap_response.wrap_data(order.get(order_id, key))
+        return wrap_response.wrap_data(services.order.get(order_id, key))
 
-    except Order.DoesNotExist as e:
+    except models.Order.DoesNotExist as e:
         return wrap_response.wrap_error(
             f"Не найден заказ #{order_id}",
             404
@@ -57,6 +61,28 @@ def get(request, order_id):
         )
 
 
-def update_order_payment_status(request, order_id):
-    # todo
-    ...
+def pay(request, order_id):
+    try:
+        key = request.GET.get('key')
+        if key is None:
+            return wrap_response.wrap_error('Не передан ключ')
+        return wrap_response.wrap_data(
+            {'paymentUrl': services.order.initialize_payment(order_id)}
+        )
+
+    except models.Order.DoesNotExist:
+        return wrap_response.wrap_error('Заказа не существует', 404)
+
+
+def payment_notification(request):
+    response = json.loads(request.body)
+    if response['Status'] == "CONFIRMED":
+        try:
+            services.order.update_order_payment_status(
+                order_id=response['OrderId'],
+                payment_id=response['PaymentId'],
+            )
+        except models.Order.DoesNotExist:
+            # todo: handle
+            pass
+    return django.http.HttpResponse("OK")

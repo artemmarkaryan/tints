@@ -1,4 +1,5 @@
 from django.urls import path
+from django.conf import settings
 from app.views import (
     product,
     category,
@@ -9,6 +10,7 @@ from app.views import (
     review,
     order,
     shipping_method,
+    pay,
     payment_method
 )
 
@@ -23,9 +25,11 @@ urlpatterns = [
     path('review/all/', review.get_all),
     path('feedback/', feedback.process),
     path('newsletter/', newsletter.process),
-    path('order/', order.new),
+    path('order/', order.create),
+    path('order/<int:order_id>/pay', order.pay),
+    path('order/<int:order_id>', order.get),
     path('shippingMethod/all', shipping_method.get_all),
     path('paymentMethod/all', payment_method.get_all),
-    path('order/<int:order_id>', order.get),
 
+    path(settings.PAYMENT_NOTIFICATION_PATH, order.payment_notification)
 ]

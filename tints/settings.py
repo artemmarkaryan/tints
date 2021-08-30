@@ -110,9 +110,13 @@ ON_SERVER = os.environ['PATH'].startswith('/usr')
 STATIC_ROOT = '/var/static/tints' if ON_SERVER else './static'
 IMAGES_PATH = './static/img/'
 STATIC_URL = '/static/'
+PAYMENT_NOTIFICATION_PATH = 'order/paymentNotification'
 # noinspection PyUnresolvedReferences
 STATICFILES_DIRS = [
     # os.path.join(BASE_DIR, "static"),
     ('img', './static/img')
     # './static/',
 ]
+
+PAYMENT_TERMINAL_ID = os.environ.get("PAYMENT_TERMINAL_ID")
+INIT_PAYMENT_URL = 'https://securepay.tinkoff.ru/v2/Init'

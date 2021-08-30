@@ -4,3 +4,4 @@ from .shade import *
 from .feedback import *
 from .newsletter import *
 from .review import *
+from .order import *

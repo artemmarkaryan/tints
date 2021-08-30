@@ -1,7 +1,14 @@
 from django.db.models import F
 from django.db import transaction
-from django.db import *
+from django.db import (
+    Error as DbError,
+    IntegrityError
+)
+from django.conf import settings
 import copy
+import requests
+
+from helpers import wrap_response
 from app.models import (
     Order,
     Item,
@@ -53,6 +60,7 @@ def get(order_id, key):
     order_dict = copy.deepcopy(order_query).annotate(
         shippingDate=F('shipping_date'),
         shippingTime=F('shipping_time'),
+        paymentMethod=F('payment_method'),
     ).values(
         'name',
         'email',
@@ -61,9 +69,12 @@ def get(order_id, key):
         'comment',
         'shippingDate',
         'shippingTime',
+        'paymentMethod'
     )
     order_dict = order_dict[0]
     order_instance = order_query[0]
+    order_dict['paymentMethod'] = PaymentMethod.objects.get(
+        id=order_dict['paymentMethod']).code
     order_dict['shippingPrice'] = order_instance.shipping_price
     order_dict['itemsPrice'] = order_instance.items_price
     order_dict['fullPrice'] = order_instance.full_price
@@ -85,11 +96,45 @@ def get(order_id, key):
     return order_dict
 
 
-def update_order_payment_status():
-    # todo
-    ...
+def update_order_payment_status(order_id, payment_id):
+    try:
+        order_instance = Order.objects.get(id=order_id)
+        order_instance.paid = True
+        order_instance.payment_id = payment_id
+        order_instance.save()
+        return True
+    except DbError:
+        return False
 
 
-def validate():
-    # todo
-    ...
+def pay(request, order_id):
+    try:
+        key = request.GET.get('key')
+        if key is None:
+            return wrap_response.wrap_error('Не передан ключ')
+        return wrap_response.wrap_data(
+            {'paymentUrl': initialize_payment(order_id)}
+        )
+
+    except Order.DoesNotExist:
+        return wrap_response.wrap_error('Заказа не существует', 404)
+
+
+def initialize_payment(order_id):
+    order: Order = Order.objects.get(id=order_id)
+    payload = {
+        'TerminalKey': settings.PAYMENT_TERMINAL_ID,
+        'Amount': 100 * order.full_price,
+        'OrderId': str(order_id),
+    }
+    resp = requests.post(
+        url=settings.INIT_PAYMENT_URL,
+        json=payload
+    )
+
+    resp = resp.json()
+    try:
+        pay_form_url = resp['PaymentURL']
+        return pay_form_url
+    except KeyError:
+        return payload, resp
