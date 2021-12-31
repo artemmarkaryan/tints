@@ -98,7 +98,10 @@ def get_many(category_id=None):
 
     for i, category in enumerate(categories):
         categories[i]['sku'] = __get_sku_preview_dto(
-            Sku.objects.filter(product__category_id=category['id'])
+            Sku.objects.filter(
+                product__category_id=category['id'],
+                hidden=False,
+            )
         )
 
     return categories
@@ -135,5 +138,5 @@ def get_one(sku_id):
 
 def get_bestsellers():
     return __get_sku_preview_dto(
-        Sku.objects.filter(product__bestseller=True)
+        Sku.objects.filter(product__bestseller=True, hidden=False)
     )

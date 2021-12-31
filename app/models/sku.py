@@ -15,3 +15,4 @@ class Sku(Model):
     price = FloatField(verbose_name='Цена')
     shade = ForeignKey('Shade', verbose_name='Оттенок', null=True, blank=True, on_delete=RESTRICT)
     weight = IntegerField(verbose_name='Объём (мл)', null=True, blank=True)
+    hidden = BooleanField(verbose_name='Спрятан', default=False)

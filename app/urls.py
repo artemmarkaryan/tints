@@ -10,7 +10,6 @@ from app.views import (
     review,
     order,
     shipping_method,
-    pay,
     payment_method
 )
 

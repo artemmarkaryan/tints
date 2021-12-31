@@ -1,10 +1,11 @@
 .env
 venv/
 .idea/
+tints/settings.py
 *__pycache__*
 db.sqlite3
 requirements.txt
 app/migrations/
 static/
-/API.http
-/http-client.env.json
+API.http
+http-client.env.json

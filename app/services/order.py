@@ -1,3 +1,4 @@
+import datetime
 from django.db.models import F
 from django.db import transaction
 from django.db import (
@@ -35,8 +36,10 @@ def new(body) -> Order:
         comment=body.get('comment'),
         payment_method=payment_method,
         shipping_method=shipping_method,
+        shipping_price=shipping_method.price,
         paid=False,
-        status=OrderStatus.objects.get(code='initial')
+        status=OrderStatus.objects.get(code='initial'),
+        created=datetime.datetime.now(MoscowTz())
     )
 
     for item in body['items']:
@@ -101,6 +104,7 @@ def update_order_payment_status(order_id, payment_id):
         order_instance = Order.objects.get(id=order_id)
         order_instance.paid = True
         order_instance.payment_id = payment_id
+        order_instance.status = OrderStatus.objects.get(code="preparing")
         order_instance.save()
         return True
     except DbError:
@@ -138,3 +142,23 @@ def initialize_payment(order_id):
         return pay_form_url
     except KeyError:
         return payload, resp
+
+
+class MoscowTz(datetime.tzinfo):
+    def utcoffset(self, dt):
+        return datetime.timedelta(hours=3)
+
+    def fromutc(self, dt):
+        # Follow same validations as in datetime.tzinfo
+        if not isinstance(dt, datetime.datetime):
+            raise TypeError("fromutc() requires a datetime argument")
+        if dt.tzinfo is not self:
+            raise ValueError("dt.tzinfo is not self")
+
+        return dt + datetime.timedelta(hours=3)
+
+    def dst(self, dt):
+        return datetime.timedelta(0)
+
+    def tzname(self, dt):
+        return "+03"

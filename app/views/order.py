@@ -1,6 +1,7 @@
 import json
-from django.db import IntegrityError
 import django.http
+from django.db import IntegrityError
+from django.views.decorators.http import require_POST
 from helpers import wrap_response
 from app import (
     services,
@@ -74,15 +75,18 @@ def pay(request, order_id):
         return wrap_response.wrap_error('Заказа не существует', 404)
 
 
-def payment_notification(request):
-    response = json.loads(request.body)
-    if response['Status'] == "CONFIRMED":
+@require_POST
+def payment_notification(request: django.http.HttpRequest):
+    req_body = json.loads(request.body)
+    print(req_body)
+    if req_body['Status'] == "CONFIRMED":
         try:
             services.order.update_order_payment_status(
-                order_id=response['OrderId'],
-                payment_id=response['PaymentId'],
+                order_id=req_body['OrderId'],
+                payment_id=req_body['PaymentId'],
             )
         except models.Order.DoesNotExist:
             # todo: handle
             pass
+
     return django.http.HttpResponse("OK")

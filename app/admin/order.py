@@ -23,7 +23,7 @@ class ShippingMethodAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    pass
+    readonly_fields = ['created']
 
 
 @admin.register(OrderStatus)

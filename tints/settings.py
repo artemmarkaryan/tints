@@ -107,7 +107,8 @@ USE_TZ = True
 
 ON_SERVER = os.environ['PATH'].startswith('/usr')
 
-STATIC_ROOT = '/var/static/tints' if ON_SERVER else './static'
+STATIC_ROOT = '/var/static/tints/'  # ON_SERVER
+# STATIC_ROOT = './static'  # on local
 IMAGES_PATH = './static/img/'
 STATIC_URL = '/static/'
 PAYMENT_NOTIFICATION_PATH = 'order/paymentNotification'
@@ -120,3 +121,10 @@ STATICFILES_DIRS = [
 
 PAYMENT_TERMINAL_ID = os.environ.get("PAYMENT_TERMINAL_ID")
 INIT_PAYMENT_URL = 'https://securepay.tinkoff.ru/v2/Init'
+
+UNIONE_API_KEY = "695e163x51m969qm4unpwd8bx6jr7zoi1zp9cjfe"
+
+SMS_LOGIN = "orightrussia"
+SMS_PASSWORD = "oright2021"
+
+HOST = "https://tintsofnature.ru"
